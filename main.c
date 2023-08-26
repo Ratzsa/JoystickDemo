@@ -26,9 +26,9 @@ int main()
     volatile millis_t timeAtLastAnalogRead = millis_get();
     bool changedJoystickDirection = true;
     uint8_t analogCoordinates[2] = {3, 3};
-    uint8_t horizontalDigits[4] = { 1, 2, 3, 4};
+    uint8_t horizontalDigits[4] = { 4, 3, 2, 1};
     uint8_t verticalDigits[4] = { 1, 2, 3, 4};
-    uint8_t offset = 2;
+    uint8_t offset = 0;
 
     for(uint8_t i = 0; i < SMALL_LETTER_HEIGHT; i++)
     {
@@ -43,15 +43,15 @@ int main()
 
     while(1)
     {
-        int16_t horizontalMove = analogRead(JOYSTICK_HORIZONTAL);
-        int16_t verticalMove = analogRead(JOYSTICK_VERTICAL);
+        // int16_t horizontalMove = analogRead(JOYSTICK_HORIZONTAL);
+        // int16_t verticalMove = analogRead(JOYSTICK_VERTICAL);
 
         if(millis_get() - timeAtLastAnalogRead > TIME_BETWEEN_MOVES)
         {
-            offset = 2;
+            offset = 0;
 
-            int16_t analogHorizontal = horizontalMove;
-            int16_t analogVertical = verticalMove;
+            int16_t analogHorizontal = analogRead(JOYSTICK_HORIZONTAL);
+            int16_t analogVertical = analogRead(JOYSTICK_VERTICAL);
 
             // For each horizontal number
             for(uint8_t i = 0; i < 4; i++)
@@ -62,7 +62,7 @@ int main()
                     currentSmallLetter[j] = getSmallLetter(horizontalDigits[i], j);
                 }
                 undoLetter(currentSmallLetter, 0, offset, SMALL_LETTER_HEIGHT, SMALL_LETTER_WIDTH);
-                offset = offset + SMALL_LETTER_WIDTH;
+                offset = offset + SMALL_LETTER_WIDTH +1;
             }
 
             // offset = 0;
@@ -76,10 +76,10 @@ int main()
                     currentSmallLetter[j] = getSmallLetter(verticalDigits[i], j);
                 }
                 undoLetter(currentSmallLetter, 0, offset, SMALL_LETTER_HEIGHT, SMALL_LETTER_WIDTH);
-                offset = offset + SMALL_LETTER_WIDTH;
+                offset = offset + SMALL_LETTER_WIDTH + 1;
             }
 
-            offset = 2;
+            offset = 0;
 
             for(uint8_t i; i < 4; i++)
             {
@@ -101,7 +101,7 @@ int main()
                     currentSmallLetter[j] = getSmallLetter(horizontalDigits[i], j);
                 }
                 setLetter(currentSmallLetter, 0, offset, SMALL_LETTER_HEIGHT, SMALL_LETTER_WIDTH);
-                offset = offset + SMALL_LETTER_WIDTH;
+                offset = offset + SMALL_LETTER_WIDTH + 1;
             }
 
             // For each vertical number
@@ -113,7 +113,7 @@ int main()
                     currentSmallLetter[j] = getSmallLetter(verticalDigits[i], j);
                 }
                 setLetter(currentSmallLetter, 0, offset, SMALL_LETTER_HEIGHT, SMALL_LETTER_WIDTH);
-                offset = offset + SMALL_LETTER_WIDTH;
+                offset = offset + SMALL_LETTER_WIDTH + 1;
             }
 
             timeAtLastAnalogRead = millis_get();
