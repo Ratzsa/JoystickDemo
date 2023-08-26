@@ -26,9 +26,9 @@ int main()
     volatile millis_t timeAtLastAnalogRead = millis_get();
     bool changedJoystickDirection = true;
     uint8_t analogCoordinates[2] = {3, 3};
-    uint8_t horizontalDigits[4] = {0,0,0,0};
-    uint8_t verticalDigits[4] = {0,0,0,0};
-    uint8_t offset = 0;
+    uint8_t horizontalDigits[4] = { 1, 2, 3, 4};
+    uint8_t verticalDigits[4] = { 1, 2, 3, 4};
+    uint8_t offset = 2;
 
     for(uint8_t i = 0; i < SMALL_LETTER_HEIGHT; i++)
     {
@@ -48,7 +48,7 @@ int main()
 
         if(millis_get() - timeAtLastAnalogRead > TIME_BETWEEN_MOVES)
         {
-            offset = 0;
+            offset = 2;
 
             int16_t analogHorizontal = horizontalMove;
             int16_t analogVertical = verticalMove;
@@ -57,29 +57,29 @@ int main()
             for(uint8_t i = 0; i < 4; i++)
             {
                 // For each horizontal digit
-                for(uint8_t j = 0; j < 4; j++)
+                for(uint8_t j = 0; j < SMALL_LETTER_HEIGHT; j++)
                 {
-                    currentSmallLetter[j] = getSmallLetter(horizontalDigits[j], j);
-                    undoLetter(currentSmallLetter, 0, offset, SMALL_LETTER_HEIGHT, SMALL_LETTER_WIDTH);
-                    offset = offset + SMALL_LETTER_WIDTH;
+                    currentSmallLetter[j] = getSmallLetter(horizontalDigits[i], j);
                 }
+                undoLetter(currentSmallLetter, 0, offset, SMALL_LETTER_HEIGHT, SMALL_LETTER_WIDTH);
+                offset = offset + SMALL_LETTER_WIDTH;
             }
 
-            offset = 0;
+            // offset = 0;
 
             // For each vertical number
             for(uint8_t i = 0; i < 4; i++)
             {
                 // For each vertical digit
-                for(uint8_t j = 0; j < 4; j++)
+                for(uint8_t j = 0; j < SMALL_LETTER_HEIGHT; j++)
                 {
-                    currentSmallLetter[j] = getSmallLetter(verticalDigits[j], j);
-                    undoLetter(currentSmallLetter, 0, offset, SMALL_LETTER_HEIGHT, SMALL_LETTER_WIDTH);
-                    offset = offset + SMALL_LETTER_WIDTH;
+                    currentSmallLetter[j] = getSmallLetter(verticalDigits[i], j);
                 }
+                undoLetter(currentSmallLetter, 0, offset, SMALL_LETTER_HEIGHT, SMALL_LETTER_WIDTH);
+                offset = offset + SMALL_LETTER_WIDTH;
             }
 
-            offset = 0;
+            offset = 2;
 
             for(uint8_t i; i < 4; i++)
             {
@@ -96,26 +96,24 @@ int main()
             for(uint8_t i = 0; i < 4; i++)
             {
                 // For each horizontal digit
-                for(uint8_t j = 0; j < 4; j++)
+                for(uint8_t j = 0; j < SMALL_LETTER_HEIGHT; j++)
                 {
-                    currentSmallLetter[j] = getSmallLetter(horizontalDigits[j], j);
-                    setLetter(currentSmallLetter, 0, offset, SMALL_LETTER_HEIGHT, SMALL_LETTER_WIDTH);
-                    offset = offset + SMALL_LETTER_WIDTH;
+                    currentSmallLetter[j] = getSmallLetter(horizontalDigits[i], j);
                 }
+                setLetter(currentSmallLetter, 0, offset, SMALL_LETTER_HEIGHT, SMALL_LETTER_WIDTH);
+                offset = offset + SMALL_LETTER_WIDTH;
             }
-
-            offset = 0;
 
             // For each vertical number
             for(uint8_t i = 0; i < 4; i++)
             {
                 // For each vertical digit
-                for(uint8_t j = 0; j < 4; j++)
+                for(uint8_t j = 0; j < SMALL_LETTER_HEIGHT; j++)
                 {
-                    currentSmallLetter[j] = getSmallLetter(verticalDigits[j], j);
-                    setLetter(currentSmallLetter, 0, offset, SMALL_LETTER_HEIGHT, SMALL_LETTER_WIDTH);
-                    offset = offset + SMALL_LETTER_WIDTH;
+                    currentSmallLetter[j] = getSmallLetter(verticalDigits[i], j);
                 }
+                setLetter(currentSmallLetter, 0, offset, SMALL_LETTER_HEIGHT, SMALL_LETTER_WIDTH);
+                offset = offset + SMALL_LETTER_WIDTH;
             }
 
             timeAtLastAnalogRead = millis_get();
@@ -147,7 +145,8 @@ void initDemo()
 
 uint8_t getDigit(uint16_t num)
 {
-    return num % 10;
+    uint8_t valueReturn = num % 10;
+    return valueReturn;
 }
 
 /*

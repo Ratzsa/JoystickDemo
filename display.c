@@ -23,12 +23,12 @@ void undoLetter(uint8_t *letter, uint8_t startX, uint8_t offset, uint8_t letterH
         {
             if(BIT_CHECK(todo, col))
             {
-                // int8_t column = (letterWidth - col) - startX;
+                int8_t column = (letterWidth - col) - startX;
                 // if((column + offset) < 0)
                 // {
                 //     column = MAX_COLUMNS + column;
                 // }
-                max7219b_clr((col + offset), row);
+                max7219b_clr((column + offset), row);
             }
         }
     }
@@ -43,12 +43,12 @@ void setLetter(uint8_t *letter, uint8_t startX, uint8_t offset, uint8_t letterHe
         {
             if(BIT_CHECK(todo, col))
             {
-                // int8_t column = (letterWidth - col) - startX;
+                int8_t column = (letterWidth - col) - startX;
                 // if((column + offset) < 0)
                 // {
                 //     column = MAX_COLUMNS + column;
                 // }
-                max7219b_set((col + offset), row);
+                max7219b_set((column + offset), row);
             }
         }
     }

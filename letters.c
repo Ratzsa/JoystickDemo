@@ -43,23 +43,23 @@ uint8_t getCapitalLetter(uint8_t setLetter, uint8_t rowNum)
 
 uint8_t getSmallLetter(uint8_t setLetter, uint8_t rowNum)
 {
-    uint8_t X[] = {0B000,0B101,0B010,0B101,0B000};
-    uint8_t Y[] = {0B000,0B101,0B010,0B010,0B000};
-    uint8_t One[] = {0B010,0B010,0B010,0B010,0B010};
-    uint8_t Two[] = {0B111,0B001,0B111,0B100,0B111};
-    uint8_t Three[] = {0B111,0B001,0B011,0B001,0B111};
-    uint8_t Four[] = {0B101,0B101,0B111,0B001,0B001};
-    uint8_t Five[] = {0B111,0B100,0B111,0B001,0B111};
-    uint8_t Six[] = {0B111,0B100,0B111,0B101,0B111};
-    uint8_t Seven[] = {0B111,0B001,0B001,0B001,0B001};
-    uint8_t Eight[] = {0B111,0B101,0B111,0B101,0B111};
-    uint8_t Nine[] = {0B111,0B101,0B111,0B001,0B111};
-    uint8_t Zero[] = {0B111,0B101,0B101,0B101,0B111};
-    uint8_t U[] = {0B101,0B101,0B101,0B101,0B111};
-    uint8_t L[] = {0B100,0B100,0B100,0B100,0B111};
-    uint8_t D[] = {0B110,0B101,0B101,0B101,0B110};
-    uint8_t R[] = {0B110,0B101,0B110,0B101,0B101};
-    uint8_t N[] = {0B000,0B111,0B000,0B111,0B000};
+    uint8_t X[] =       {0B000,0B101,0B010,0B101,0B000};
+    uint8_t Y[] =       {0B000,0B101,0B010,0B010,0B000};
+    uint8_t One[] =     {0B010,0B010,0B010,0B010,0B010};
+    uint8_t Two[] =     {0B111,0B001,0B111,0B100,0B111};
+    uint8_t Three[] =   {0B111,0B001,0B011,0B001,0B111};
+    uint8_t Four[] =    {0B101,0B101,0B111,0B001,0B001};
+    uint8_t Five[] =    {0B111,0B100,0B111,0B001,0B111};
+    uint8_t Six[] =     {0B111,0B100,0B111,0B101,0B111};
+    uint8_t Seven[] =   {0B111,0B001,0B001,0B001,0B001};
+    uint8_t Eight[] =   {0B111,0B101,0B111,0B101,0B111};
+    uint8_t Nine[] =    {0B111,0B101,0B111,0B001,0B111};
+    uint8_t Zero[] =    {0B111,0B101,0B101,0B101,0B111};
+    uint8_t U[] =       {0B101,0B101,0B101,0B101,0B111};
+    uint8_t L[] =       {0B100,0B100,0B100,0B100,0B111};
+    uint8_t D[] =       {0B110,0B101,0B101,0B101,0B110};
+    uint8_t R[] =       {0B110,0B101,0B110,0B101,0B101};
+    uint8_t N[] =       {0B000,0B111,0B000,0B111,0B000};
 
     switch(setLetter)
     {
