@@ -48,16 +48,11 @@ int main()
 
         if(millis_get() - timeAtLastAnalogRead > TIME_BETWEEN_MOVES)
         {
-
-            max7219b_clr(analogCoordinates[0], analogCoordinates[1]);
-            analogCoordinates[0] = (MAX_COLUMNS / 2) + 6 -setCoordinate(horizontalMove);
-            analogCoordinates[1] = MAX_ROWS - setCoordinate(verticalMove) - 2;
-            max7219b_set(analogCoordinates[0], analogCoordinates[1]);
-            max7219b_out();
-
             offset = 0;
+
             int16_t analogHorizontal = horizontalMove;
             int16_t analogVertical = verticalMove;
+
             // For each horizontal number
             for(uint8_t i = 0; i < 4; i++)
             {
@@ -68,9 +63,13 @@ int main()
                     undoLetter(currentSmallLetter, 0, offset, SMALL_LETTER_HEIGHT, SMALL_LETTER_WIDTH);
                     offset = offset + SMALL_LETTER_WIDTH;
                 }
+            }
 
-                offset = 0;
+            offset = 0;
 
+            // For each vertical number
+            for(uint8_t i = 0; i < 4; i++)
+            {
                 // For each vertical digit
                 for(uint8_t j = 0; j < 4; j++)
                 {
@@ -80,6 +79,7 @@ int main()
                 }
             }
 
+            offset = 0;
 
             for(uint8_t i; i < 4; i++)
             {
@@ -102,6 +102,13 @@ int main()
                     setLetter(currentSmallLetter, 0, offset, SMALL_LETTER_HEIGHT, SMALL_LETTER_WIDTH);
                     offset = offset + SMALL_LETTER_WIDTH;
                 }
+            }
+
+            offset = 0;
+
+            // For each vertical number
+            for(uint8_t i = 0; i < 4; i++)
+            {
                 // For each vertical digit
                 for(uint8_t j = 0; j < 4; j++)
                 {
