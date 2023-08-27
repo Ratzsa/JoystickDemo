@@ -26,8 +26,8 @@ int main()
     volatile millis_t timeAtLastAnalogRead = millis_get();
     bool changedJoystickDirection = true;
     uint8_t analogCoordinates[2] = {3, 3};
-    uint8_t horizontalDigits[4] = { 4, 3, 2, 1};
-    uint8_t verticalDigits[4] = { 1, 2, 3, 4};
+    volatile uint8_t horizontalDigits[4] = { 4, 3, 2, 1};
+    volatile uint8_t verticalDigits[4] = { 1, 2, 3, 4};
     uint8_t offset = 0;
 
     for(uint8_t i = 0; i < SMALL_LETTER_HEIGHT; i++)
@@ -43,52 +43,31 @@ int main()
 
     while(1)
     {
-        // int16_t horizontalMove = analogRead(JOYSTICK_HORIZONTAL);
-        // int16_t verticalMove = analogRead(JOYSTICK_VERTICAL);
+        volatile int16_t analogHorizontal = analogRead(JOYSTICK_HORIZONTAL);
+        volatile int16_t analogVertical = analogRead(JOYSTICK_VERTICAL);
 
         if(millis_get() - timeAtLastAnalogRead > TIME_BETWEEN_MOVES)
         {
-            offset = 0;
 
-            int16_t analogHorizontal = analogRead(JOYSTICK_HORIZONTAL);
-            int16_t analogVertical = analogRead(JOYSTICK_VERTICAL);
+            /* Use code to display a little dot that moves with the joystick. It is very adorable.
+            max7219b_clr(analogCoordinates[0], analogCoordinates[1]);
+            analogCoordinates[0] = (MAX_COLUMNS / 2) + 6 -setCoordinate(analogHorizontal);
+            analogCoordinates[1] = MAX_ROWS - setCoordinate(analogVertical) - 2;
+            max7219b_set(analogCoordinates[0], analogCoordinates[1]);
+            max7219b_out();
+            */
 
-            // For each horizontal number
-            for(uint8_t i = 0; i < 4; i++)
-            {
-                // For each horizontal digit
-                for(uint8_t j = 0; j < SMALL_LETTER_HEIGHT; j++)
-                {
-                    currentSmallLetter[j] = getSmallLetter(horizontalDigits[i], j);
-                }
-                undoLetter(currentSmallLetter, 0, offset, SMALL_LETTER_HEIGHT, SMALL_LETTER_WIDTH);
-                offset = offset + SMALL_LETTER_WIDTH +1;
-            }
-
-            // offset = 0;
-
-            // For each vertical number
-            for(uint8_t i = 0; i < 4; i++)
-            {
-                // For each vertical digit
-                for(uint8_t j = 0; j < SMALL_LETTER_HEIGHT; j++)
-                {
-                    currentSmallLetter[j] = getSmallLetter(verticalDigits[i], j);
-                }
-                undoLetter(currentSmallLetter, 0, offset, SMALL_LETTER_HEIGHT, SMALL_LETTER_WIDTH);
-                offset = offset + SMALL_LETTER_WIDTH + 1;
-            }
 
             offset = 0;
 
-            for(uint8_t i; i < 4; i++)
+            for(uint8_t i = 0; i < 4; i++)
             {
-                verticalDigits[i] = getDigit(analogVertical);
+                verticalDigits[3 - i] = getDigit(analogVertical);
                 analogVertical = analogVertical / 10;
             }
-            for(uint8_t i; i < 4; i++)
+            for(uint8_t i = 0; i < 4; i++)
             {
-                horizontalDigits[i] = getDigit(analogHorizontal);
+                horizontalDigits[3 - i] = getDigit(analogHorizontal);
                 analogHorizontal = analogHorizontal / 10;
             }
 
@@ -145,19 +124,6 @@ void initDemo()
 
 uint8_t getDigit(uint16_t num)
 {
-    uint8_t valueReturn = num % 10;
+    uint16_t valueReturn = num % 10;
     return valueReturn;
 }
-
-/*
-OLD CODE, USED TO DISPLAY A MARKER ON THE DISPLAY TO MESURE POSITION OF JOYSTICK
-Put it in main to get it working.
-        if(millis_get() - timeAtLastAnalogRead > TIME_BETWEEN_MOVES)
-        {
-            max7219b_clr(analogCoordinates[0], analogCoordinates[1]);
-            analogCoordinates[0] = (MAX_COLUMNS / 2) + 6 -setCoordinate(horizontalMove);
-            analogCoordinates[1] = MAX_ROWS - setCoordinate(verticalMove) - 2;
-            max7219b_set(analogCoordinates[0], analogCoordinates[1]);
-            max7219b_out();
-        }
-*/

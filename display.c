@@ -50,6 +50,15 @@ void setLetter(uint8_t *letter, uint8_t startX, uint8_t offset, uint8_t letterHe
                 // }
                 max7219b_set((column + offset), row);
             }
+            else
+            {
+                int8_t column = (letterWidth - col) - startX;
+                // if((column + offset) < 0)
+                // {
+                //     column = MAX_COLUMNS + column;
+                // }
+                max7219b_clr((column + offset), row);
+            }
         }
     }
     max7219b_out();

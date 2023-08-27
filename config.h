@@ -21,7 +21,7 @@
 #define ANALOG_LOW 256
 
 // Change for easier or harder difficulty
-#define TIME_BETWEEN_MOVES 500
+#define TIME_BETWEEN_MOVES 200
 #define TIME_BETWEEN_MOVES_REDUCTION 15
 
 #define JOYSTICK_BUTTON 2
